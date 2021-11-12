@@ -262,9 +262,6 @@ To run it using the built in HardHard environment blockchain use:
 
 `npx hardhat run scripts/Deploy.js`
 
-You should see the following output (Your addresses and token balance might be different)
-
-```markdown
 
 ## **Deployment**:
 
@@ -322,11 +319,6 @@ main()
     });
 
 ```
-
-To run it using the built in HardHard environment blockchain use: 
-
-`npx hardhat run scripts/Deploy.js`
-
 
 # Deploy to Network:
 
