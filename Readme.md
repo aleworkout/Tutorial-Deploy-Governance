@@ -1,50 +1,4 @@
-TL:DR
-
-Want governance now? Clone the [github](https://github.com/withtally/Tutorial-Deploy-Governance) project, install the dependencies, add your Infura API and private key to the config and type `npx hardhat deploy`
-
-**Tally Governance Tutorial:** 
-
-In this tutorial we show you how to deploy a Compound-style governance system that is secure and ready to be used in your DeFi project or protocol using HardHat.
-
-## About [Tally](https://withtally.com/):
-
-[https://withtally.com/](https://withtally.com/)
-
-Tally is the premier place to interact with Governance on the Ethereum blockchain. We make tools to make governance easier, bring greater community involvement and enhanced transparency for decentralized protocols.
-
-If you would like to have your Compound-Style governance indexed by [Tally](http://www.withTally.com) indexers and added to the website, please [contact us](//dennison@withTally.com).
-
-**What we will accomplish:** 
-
-1. Review components of Compounds Governance system
-2. Write a script that deploys Compounds Governance contracts to a network of your choice
-3. Create a CLI task in HardHat that allows you to deploy secure governance's from the command line
-
-**Resources:** 
-
-[Complete source code](https://github.com/withtally/Tutorial-Deploy-Governance) for this tutorial
-
-Check out recent votes and proposals on Compound with [Tally](http://www.withTally.com)
-
-[Tally Discord](https://discord.gg/Shx5Yjzqwm)
-
-[Compounds Documentation](https://compound.finance/docs)
-
-[HardHat](https://hardhat.org/getting-started/)
-
-**Why Compound?** 
-
-Compound COMP governance system is one of the best in DeFi. It backs billions of dollars and its community regularly [proposes and votes](https://www.withtally.com/governance/compound) on changes via its governance. It is also the same governance tool used by [Uniswap](https://www.withtally.com/governance/uniswap) for governance and also backs billions of dollars. The system is comprised of three basic contracts, is easy to reason about, and has been very closely audited.
-
-## Background
-
-### The Compound Github
-
-All of the code required to launch your own governance can be found on the Compound Github.
-
-[https://github.com/compound-finance/compound-protocol/tree/master/contracts](https://github.com/compound-finance/compound-protocol/tree/master/contracts)
-
-The three contract we are interested in are: 
+## The three contract we are interested in are: 
 
 **[Comp](https://github.com/compound-finance/compound-protocol/blob/master/contracts/Governance/Comp.sol)**
 
@@ -52,43 +6,6 @@ The three contract we are interested in are:
 
 **[Timelock](https://github.com/compound-finance/compound-protocol/blob/master/contracts/Timelock.sol)**
 
-### **COMP**
-
-[https://github.com/compound-finance/compound-protocol/blob/master/contracts/Governance/Comp.sol](https://github.com/compound-finance/compound-protocol/blob/master/contracts/Governance/Comp.sol)
-
-The COMP contract is what creates the COMP token. It is an ERC20 compatible token with support for checkpoints. Checkpointing is a system by which you can check the token balance of any user at any particular point in history. This is important because when a vote comes up that users need to vote on, you don't want individuals buying or selling tokens specifically to change the outcome of the vote and then dumping straight after a vote closes. To avoid this, checkpoints are used. By the time someone creates a proposal and puts it up for a vote in the Compound ecosystem, the voting power of all token holders is already known, and fixed, at a point in the past. This way users can still buy or sell tokens, but their balances won't affect their voting power. 
-
-### **GovernorAlpha**
-
-[https://github.com/compound-finance/compound-protocol/blob/master/contracts/Governance/GovernorAlpha.sol](https://github.com/compound-finance/compound-protocol/blob/master/contracts/Governance/GovernorAlpha.sol)
-
-The GovernorAlpha contract is the contract that does the actual "governance" part of the ecosystem. There are a number of hard-coded parameters that decide the functionality of governance, and the contract itself is the tool by which proposals are proposed, voted upon, and transferred to a timelock to be executed. The logic for secure voting is handled here. 
-
-### **Timelock**
-
-[https://github.com/compound-finance/compound-protocol/blob/master/contracts/Timelock.sol](https://github.com/compound-finance/compound-protocol/blob/master/contracts/Timelock.sol)
-
-The final component of the system is a Timelock. Timelock contracts essentially "delay" the execution of transactions to give the community a chance for a "sanity check" to be  run over the outcome of a vote. It's important if a last minute bug is found in the system and it needs to be caught before a transaction is implemented.
-
-All three of these components work together with their own sphere of influence. The COMP token essentially functions as a voter registration tool (and as a tradable ERC20 token), the GovernorAlpha acts as a polling location- the place where voting happens, and the Timelock acts as a loading bay that holds decision for a set amount of time before executing them on the network. 
-
-### Get the Source Code
-
-First we need to get the COMP source code. There are two options for this to be sure you're getting the audited and deployed Code: The [Compound Github](https://github.com/compound-finance), or Etherscan via the [Compound Finance Doc's](https://compound.finance/docs). 
-
-**Etherscan:** 
-
-If you go the etherscan route, to get the addresses of the deployed Compound contracts visit [https://compound.finance/docs](https://compound.finance/docs).
-
-Since all Compound Finance code has been verified on Etherscan (don't use any code that isn't verified for a real project!) we can flip over to the contract information to see the source code and copy it. 
-
-**For reference:** 
-
-COMP: [https://etherscan.io/address/0xc00e94cb662c3520282e6f5717214004a7f26888](https://etherscan.io/address/0xc00e94cb662c3520282e6f5717214004a7f26888)
-
-Governance: [https://etherscan.io/address/0xc0da01a04c3f3e0be433606045bb7017a7323e38](https://etherscan.io/address/0xc0da01a04c3f3e0be433606045bb7017a7323e38)
-
-Timelock: [https://etherscan.io/address/0x6d903f6003cca6255d85cca4d3b5e5146dc33925](https://etherscan.io/address/0x6d903f6003cca6255d85cca4d3b5e5146dc33925)
 
 ## Create your project
 
@@ -125,7 +42,6 @@ This will setup our initial HardHat Project with some defaults.
 
 At this point you might want to spend a couple minutes inspecting the HardHat setup if this is your first time working with it. 
 
-Check out this guide for more info: [https://hardhat.org/getting-started/](https://hardhat.org/getting-started/)
 
 ### Create the files
 
@@ -140,52 +56,6 @@ When you are finished your `/contracts` folder should have three contracts in it
 	COMP.sol
 	Timelock.sol
 	GovernorAlpha.sol
-```
-
-**CUSTOMIZE and COMPILE** 
-
-The next step is to compile our contracts, but before we do that we need to configure our Solidity Compiler version. Compounds contracts were compiled with Solidity version: 0.5.16, which is significantly older than the default 0.7.3 which is found in the default HardHat configuration. You can update the Compound files be compatible with the latest compiler, but you will lose the implied security guarantees of the existing audited code if you do that. 
-
-At the top level of your project find the file:
-
-`hardhat.config.js`
-
-At the bottom of the file you will find an exports that includes the Solidity compiler version: 
-
-```jsx
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
-module.exports = {
-  solidity: "0.7.3",
-};
-```
-
-Here change the "0.7.3" to "0.5.16" so the exports looks like this: 
-
-```jsx
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
-module.exports = {
-  solidity: "0.5.16",
-};
-```
-
-Now we are ready to compile and this is where HardHat makes the development process so simple.  (Note, make sure you have deleted the `Greeter.sol` contract or else the mismatch in Solidity compile versions will prevent you from compiling). 
-
-`npx hardhat compile`
-
-You should see this output: 
-
-```markdown
-❯ npx hardhat compile
-Compiling 3 files with 0.5.16
-contracts/COMP.sol:6:1: Warning: Experimental features are turned on. Do not use experimental features on live deployments.
-pragma experimental ABIEncoderV2;
-^-------------------------------^
-
-Compilation finished successfully
 ```
 
 Easy!
@@ -315,45 +185,77 @@ The constants available to modify are:
 
 In general, I would recommend leaving these set as they are, but again- if you need something different feel free to customize them. Once you're set, run `npx hardhat compile` again. 
 
-## **Deployment**:
+## **hardhat.config.js**:
 
-To deploy a contract using HardHat, we need to first write a script. When we first created our project HardHat created a sample script for us, but we're going to start from scratch. To deploy a COMP governance system we need to deploy our contracts in a specific order as some contracts need the address of the others in their constructor functions: 
-
-First, we will deploy COMP, the token. For this our constructor only needs the address of where to send the initial (fixed) token supply.
-
-Create a `Deploy.js` file in your `/scripts` folder, copy/paste the following code: 
+Use this:
 
 ```jsx
-const hre = require("hardhat");
-const ethers = hre.ethers;
+require("@nomiclabs/hardhat-waffle");
+require("@nomiclabs/hardhat-ethers");
 
-async function main() {
 
-	// Compile our Contracts, just in case
-  await hre.run('compile');
+// This is a sample Hardhat task. To learn how to create your own go to
+// https://hardhat.org/guides/create-task.html
+task("accounts", "Prints the list of accounts", async () => {
+  const accounts = await ethers.getSigners();
 
-	// Get a signer from the HardHard environment
-	// Learn about signers here: https://docs.ethers.io/v4/api-wallet.html
-  const [tokenRecipient] = await ethers.getSigners();
+  for (const account of accounts) {
+    console.log(account.address);
+  }
+});
 
-  // This gets the contract from 
-  const Token = await hre.ethers.getContractFactory("Comp");
-  const token = await Token.deploy(tokenRecipient.address);
+task("Deploy", "Deploys a COMPound style governance system")
+  .addParam("token", "The address to receive the initial supply")
+  .addParam("timelock", "The timelock administrator")
+  .addParam("guardian", "The governor guardian").setAction(async taskArgs => {
 
-  await token.deployed();
-  console.log(`Token deployed to: ${token.address}`);
-  
+    const { deploy } = require("./scripts/Deploy");
 
-  const initialBalance = await token.balanceOf(tokenRecipient.address);
-  console.log(`${initialBalance / 1e18} tokens transfered to ${tokenRecipient.address}`);
+    await deploy({
+      tokenRecipient: taskArgs.token,
+      timeLockAdmin: taskArgs.timelock,
+      guardian: taskArgs.guardian
+    });
+
+  })
+
+
+// You need to export an object to set up your config
+// Go to https://hardhat.org/config/ to learn more
+
+/**
+ * @type import('hardhat/config').HardhatUserConfig
+ */
+// One url would be someting like this (I changed one letter on it):
+// So you need to create one by yourself
+// "https://polygon-mainnet.g.alchemy.com/v2/vWbaAY8gHj8IGgcKWmaKQlYHb91QJdHw"
+module.exports = {
+  networks: {
+    hardhat: {
+    },
+    polygon: {
+      url: "https://polygon-mainnet.g.alchemy.com/v2/here_it_goes_a_hash",
+      accounts: [
+        "0xPRIVATE_KEY_OF_FIRST_ACCOUNT",
+        "0xPRIVATE_KEY_OF_SECOND_ACCOUNT",
+        "0xPRIVATE_KEY_OF_THIRD_ACCOUNT"
+      ]
+    }
+  },
+  solidity: {
+    compilers: [
+      {
+        version: "0.8.0",
+      },
+      {
+        version: "0.8.2",
+      },
+      {
+        version: "0.5.16",
+      },
+    ]
+  }
 }
-
-main()
-  .then(() => process.exit(0))
-  .catch(error => {
-    console.error(error);
-    process.exit(1);
-  });
 ```
 
 To run it using the built in HardHard environment blockchain use: 
@@ -363,76 +265,14 @@ To run it using the built in HardHard environment blockchain use:
 You should see the following output (Your addresses and token balance might be different)
 
 ```markdown
-❯ npx hardhat run scripts/Deploy.js
-Nothing to compile
-Token deployed to: 0x5FbDB2315678afecb367f032d93F642f64180aa3
-10000000 tokens transfered to 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
-```
 
-Great! We've just deployed our COMP token to an ephemeral development blockchain that exists only inside this running program instance. (We will get to deploying to a real network later). 
+## **Deployment**:
 
-**Timelock**
+To deploy a contract using HardHat, we need to first write a script. When we first created our project HardHat created a sample script for us, but we're going to start from scratch. To deploy a COMP governance system we need to deploy our contracts in a specific order as some contracts need the address of the others in their constructor functions: 
 
-Next we will deploy the Timelock because the governance needs to know the Timelock address. 
+First, we will deploy COMP, the token. For this our constructor only needs the address of where to send the initial (fixed) token supply.
 
-First, lets get another address to be the Timelock admin, change line: 
-
-```jsx
-const [tokenRecipient] = await ethers.getSigners();
-```
-
-to get another signer
-
-```jsx
-const [tokenRecipient, timelockAdmin] = await ethers.getSigners();
-
-```
-
-Now that we have a signer to be our `Timelock` admin, we can choose a delay between our `MINIMUM_DELAY` and `MAXIMUM_DELAY` constants, and pass that in. 
-
-Add to our file, after the line where we `await token.deployed()` the following: 
-
-```jsx
-		// deploy timelock 
-		const delay = 5;
-    const Timelock = await ethers.getContractFactory("Timelock");
-    const timelock = await Timelock.deploy(timelockAdmin.address, delay);
-    await timelock.deployed();
-    await timelock.deployTransaction.wait();
-		// A nice sanity check to see the address
-    console.log(`TimeLock deployed to: ${timelock.address}`);
-```
-
-Run `npx hardhat run scripts/Deploy.js` again. 
-
-NOTE: If you get the following error: `Error: VM Exception while processing transaction: revert Timelock::constructor: Delay must exceed minimum delay.` This means your deployment of Timelock didn't go through because the delay you chose wasn't between your `MINIMUM_DELAY` and `MAXIMUM_DELAY`. The trick is though that in the code, these days are specified in **DAYS**, which Solidity estimates in SECONDS. The delay you send in to the constructor is denoted in seconds, so you have to choose a number of seconds that represents the time in days you want to use as a delay. So if you want **5** days instead of 5 seconds in the example above you would do: 5*60*60*24= **432,000**, and you would use that number for your delay instead.
-
- ****Run `npx hardhat run scripts/Deploy.js` again and it should work. 
-
-**GovernorAlpha**
-
-Now that you've deployed your governance token, your timelock contract, it's time to deploy the GovernorAlpha contract. 
-
-To deploy we will use the same pattern as above. First let's get another signer, a "Guardian", an address that has the power to cancel proposals (use this wisely!). 
-
-```jsx
-const [tokenRecipient, timelockAdmin, guardian] = await ethers.getSigners();
-```
-
-Now add the following code after the Timelock gets deployed: 
-
-```jsx
-		// Deploy Governance
-    const Gov = await ethers.getContractFactory("GovernorAlpha");
-    const gov = await gov.deploy(timelock.address, token.address, guardian.address);
-    await gov.deployed();
-    await gov.deployTransaction.wait();
-
-		...
-		console.log(`GovernorAlpha deployed to: ${gov.address}`)
-```
-
-The full code so far is: 
+Create a `Deploy.js` file in your `/scripts` folder, copy/paste the following code: 
 
 ```jsx
 const hre = require("hardhat");
@@ -452,7 +292,7 @@ async function main() {
     const token = await Token.deploy(tokenRecipient.address);
     await token.deployed();
     await token.deployTransaction.wait();
-    
+
     // Deploy Timelock
     const delay = 172800;
     const Timelock = await ethers.getContractFactory("Timelock");
@@ -480,14 +320,19 @@ main()
         console.error(error);
         process.exit(1);
     });
+
 ```
+
+To run it using the built in HardHard environment blockchain use: 
+
+`npx hardhat run scripts/Deploy.js`
+
 
 # Deploy to Network:
 
-Now that we have this working, deploying to a real network requires only two things: 
+Now that we have this working, deploying to a real network requires only one thing
 
-1. Changes to the `hardhat.config.js` file to add a new network
-2. Private keys to the addresses you with to use as Signers. 
+1. Private keys to the addresses you will use as Signers. 
 
 **Update the `hardhat.config.js` file**
 
